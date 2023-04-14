@@ -6,6 +6,7 @@ import tensorflow as tf
 
 
 
+
 def data_Import_ibb():
     ibb_full = pd.read_csv('data/Deep_Portfolio/ibb.csv', index_col=0).astype('float32')
 
@@ -25,7 +26,14 @@ def data_Import_ibb():
 
 
 def data_import_ETFs():
+    etfs_full = pd.read_csv('data/OLPS_Portfolio/ETFs.csv')
+    return etfs_full
     
 
-# def data_import_spx():
-#     pd.read_csv('data/PCA_Factors/spx_holdings_and_spx_closeprice.csv')
+def data_import_spx():
+    spx_full = pd.read_csv('data/PCA_Factor/spx_holdings_and_spx_closeprice.csv')
+    return spx_full
+
+
+
+print(data_import_ETFs())
