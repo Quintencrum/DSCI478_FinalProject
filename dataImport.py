@@ -31,9 +31,9 @@ def data_import_ETFs():
     
 
 def data_import_spx():
-    spx_full = pd.read_csv('data/PCA_Factor/spx_holdings_and_spx_closeprice.csv')
+    spx_full = pd.read_csv('data/PCA_Factors/spx_holdings_and_spx_closeprice.csv')
     return spx_full
 
 
-
-print(data_import_ETFs())
+temp = data_import_spx()
+print(temp['A'])
