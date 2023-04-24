@@ -1,6 +1,6 @@
 import argparse
 
-from src.data import dataImport
+from data import dataImport, visualize
 
 
 def main(parsed):

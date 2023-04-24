@@ -1,6 +1,6 @@
 import pandas as pd
 
-import src.utilities as utils
+import utilities as utils
 
 
 def data_import_ibb():
