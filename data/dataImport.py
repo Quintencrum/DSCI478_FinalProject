@@ -1,6 +1,6 @@
 import pandas as pd
 
-import utilities as utils
+import src.utilities as utils
 
 
 def data_import_ibb():
@@ -9,7 +9,7 @@ def data_import_ibb():
     ibb_full = pd.read_csv(data_path.joinpath('ibb.csv'), index_col=0).astype('float32')
     stock_lp = pd.read_csv(data_path.joinpath('last_price.csv'), index_col=0).astype('float32')
     stock_net = pd.read_csv(data_path.joinpath('net_change.csv'), index_col=0).astype('float32')
-    stock_percentage = pd.read_csv(data_path.joinpath('percentage_change.csv'), index_col=0)).astype('float32')
+    stock_percentage = pd.read_csv(data_path.joinpath('percentage_change.csv'), index_col=0).astype('float32')
 
     return ibb_full, stock_lp, stock_net, stock_percentage
 
