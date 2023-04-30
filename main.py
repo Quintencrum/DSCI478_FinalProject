@@ -23,13 +23,17 @@ def main():
     print('Hello World!')
     allStock_df_list = networkGraphs_dataPrep.networkDataPrep(dataImport.data_import_ng())
 
-    df_dcor_list = [networkGraphs_dataPrep.distance_correlation_matrix(df) for df in allStock_df_list]
+    # df_dcor_list = [networkGraphs_dataPrep.distance_correlation_matrix(df) for df in allStock_df_list]
+
+    df_dcor_list = [networkGraphs_dataPrep.df_distance_correlation(df) for df in allStock_df_list]
 
     print(df_dcor_list[4].head())
 
     # dist_corr_matrix = networkGraphs_dataPrep.distance_correlation_matrix(allStock_df)
 
     # print(dist_corr_matrix)
+
+    # networkGraphs_plot.plot_network(df_dcor_list[4],'Hello')
 
 
 
