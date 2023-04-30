@@ -31,6 +31,8 @@ def data_import_spx():
 def data_import_ng():
     data_path = utils.get_data_path().joinpath('Network_graphs')
 
-    ng_full = pd.read_csv(data_path.joinpath('all_stocks.csv'), index_col=0).astype('float32')
+    # ng_full = pd.read_csv(data_path.joinpath('all_stocks.csv'), index_col=0).astype('float32')
+    ng_full = pd.read_csv(data_path.joinpath('all_stocks.csv'))
+    #index is set in networkGraphs_dataPrep.py to make them dateTimes not just dates
 
     return ng_full
