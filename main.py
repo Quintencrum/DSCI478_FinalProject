@@ -24,7 +24,7 @@ def main():
     print('Hello World!')
     allStock_df_list = networkGraphs_dataPrep.networkDataPrep(dataImport.data_import_ng())
 
-    close_dist_matrix = networkGraphs_dataPrep.df_distance_correlation_2(allStock_df_list[0])
+    close_dist_matrix = networkGraphs_dataPrep.df_distance_correlation(allStock_df_list[0])
 
     print(close_dist_matrix)
 
