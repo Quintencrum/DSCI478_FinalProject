@@ -50,7 +50,7 @@ def networkDataPrep(allStock_df):
                   'PG':'Procter & Gamble',
                   'TRV':'Travelers',
                   'UTX':'United Technologies',
-                  'UNH':'UnitedHealth',
+                  'UNH':'United Health',
                   'VZ':'Verizon',
                   'WMT':'Walmart',
                   'GOOGL':'Google'}
