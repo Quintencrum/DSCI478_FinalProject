@@ -1,7 +1,7 @@
 import argparse
 
 from data import dataImport, visualize
-from models import networkGraphsFull, networkGraphs_dataPrep, networkGraphs_plot, networkGraphsMain
+from models import networkGraphsFull, networkGraphs_dataPrep, networkGraphs_plot
 import numpy as np
 
 
@@ -48,7 +48,7 @@ def main():
     # networkGraphsFull.plot_network(corrNet_low,'Distance Correlation Network for Low Prices')
 
 
-    networkGraphsMain.networkGraphsMainFunction(allStock_df_list)
+    networkGraphsFull.networkGraphsMainFunction(allStock_df_list)
 
 
 

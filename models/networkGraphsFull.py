@@ -217,13 +217,13 @@ def plot_network(H, title):
 
 
 
-def plot_network_graphs(corrNet_close, corrNet_open, corrNet_close_diff, corrNet_high, corrNet_low):
+def plot_network_graphs(corrNet_close, corrNet_open, corrNet_close_diff, corrNet_high, corrNet_low,type):
     #plotting the various network graphs
-    plot_network(corrNet_close,'Distance Correlation Network for Closing Prices')
-    plot_network(corrNet_open,'Distance Correlation Network for Opening Prices')
-    plot_network(corrNet_close_diff,'Distance Correlation Network for Difference in Prices (Open vs Close)')
-    plot_network(corrNet_high,'Distance Correlation Network for High Prices')
-    plot_network(corrNet_low,'Distance Correlation Network for Low Prices')
+    plot_network(corrNet_close,'Distance Correlation Network for Closing Prices-'+str(type))
+    plot_network(corrNet_open,'Distance Correlation Network for Opening Prices-'+str(type))
+    plot_network(corrNet_close_diff,'Distance Correlation Network for Difference in Prices (Open vs Close)-'+str(type))
+    plot_network(corrNet_high,'Distance Correlation Network for High Prices-'+str(type))
+    plot_network(corrNet_low,'Distance Correlation Network for Low Prices-'+str(type))
     return
 
 def correlation_networks(allStock_df_list):
@@ -251,7 +251,7 @@ def full_stock_sets(allStock_df_list):
 
     corrNet_close, corrNet_open, corrNet_close_diff, corrNet_high, corrNet_low = correlation_networks(allStock_df_list)
 
-    plot_network_graphs(corrNet_close, corrNet_open, corrNet_close_diff, corrNet_high, corrNet_low)
+    plot_network_graphs(corrNet_close, corrNet_open, corrNet_close_diff, corrNet_high, corrNet_low,'full')
 
 
 
@@ -263,33 +263,68 @@ def select_stock_set(allStock_df_list):
     closing_subset_inner = ['United Technologies','3M','JPMorgan Chase','IBM','American Express']
     closing_subset = closing_subset_inner + closing_subset_outer
 
+    df_close_outer = allStock_df_list[0][closing_subset_outer]
+    df_close_inner = allStock_df_list[0][closing_subset_inner]
+    df_close = allStock_df_list[0][closing_subset]
+
     #open
     opening_subset_outer = ['Apple','Amazon','Altaba','United Health','Home Depot']
     opening_subset_inner = ['United Technologies','3M','JPMorgan Chase','Cisco Systems','American Express']
     opening_subset = opening_subset_inner + opening_subset_outer
+
+    df_open_outer = allStock_df_list[0][opening_subset_outer]
+    df_open_inner = allStock_df_list[0][opening_subset_inner]
+    df_open = allStock_df_list[0][opening_subset]
 
     #open-close
     diff_subset_outer = ['Apple','Amazon','Altaba','United Health','Nike']
     diff_subset_inner = ['United Technologies','3M','General Electric','IBM','American Express']
     diff_subset = diff_subset_inner + diff_subset_outer
 
+    df_diff_outer = allStock_df_list[0][diff_subset_outer]
+    df_diff_inner = allStock_df_list[0][diff_subset_inner]
+    df_diff = allStock_df_list[0][diff_subset]
+
     #high
     high_subset_outer = ['Procter & Gamble','Walmart','Merk','United Health','Verizon']
     high_subset_inner = ['JPMorgan Chase','3M','General Electric','IBM','American Express']
     high_subset = high_subset_inner + high_subset_outer
+
+    df_high_outer = allStock_df_list[0][high_subset_outer]
+    df_high_inner = allStock_df_list[0][high_subset_inner]
+    df_high = allStock_df_list[0][high_subset]
 
     #low
     low_subset_outer = ['Apple','Amazon','Altaba','Verizon','Procter & Gamble']
     low_subset_inner = ['United Technologies','3M','General Electric','Walt Disney','American Express']
     low_subset = low_subset_inner + low_subset_outer
 
+    df_low_outer = allStock_df_list[0][low_subset_outer]
+    df_low_inner = allStock_df_list[0][low_subset_inner]
+    df_low = allStock_df_list[0][low_subset]
 
-    print(allStock_df_list)
 
-    # corrNet_close, corrNet_open, corrNet_close_diff, corrNet_high, corrNet_low = correlation_networks(allStock_df_list)
+    #combining stocks
+    allStock_df_list_inner = [df_close_inner, df_open_inner,df_diff_inner, df_high_inner, df_low_inner]
+    allStock_df_list_outer = [df_close_outer, df_open_outer,df_diff_outer, df_high_outer, df_low_outer]
+    allStock_df_list = [df_close, df_open,df_diff, df_high, df_low]
 
-    # #plotting the various network graphs
-    # plot_network_graphs(corrNet_close, corrNet_open, corrNet_close_diff, corrNet_high, corrNet_low)
+
+    #inner
+    corrNet_close, corrNet_open, corrNet_close_diff, corrNet_high, corrNet_low = correlation_networks(allStock_df_list_inner)
+
+    plot_network_graphs(corrNet_close, corrNet_open, corrNet_close_diff, corrNet_high, corrNet_low,'inner')
+
+    #outer
+    corrNet_close, corrNet_open, corrNet_close_diff, corrNet_high, corrNet_low = correlation_networks(allStock_df_list_outer)
+
+    plot_network_graphs(corrNet_close, corrNet_open, corrNet_close_diff, corrNet_high, corrNet_low,'outer')
+
+    #combined
+    corrNet_close, corrNet_open, corrNet_close_diff, corrNet_high, corrNet_low = correlation_networks(allStock_df_list)
+
+    plot_network_graphs(corrNet_close, corrNet_open, corrNet_close_diff, corrNet_high, corrNet_low,'combined')
+
 
 
 
