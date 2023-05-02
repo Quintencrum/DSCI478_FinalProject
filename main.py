@@ -44,36 +44,24 @@ def main():
 
     #distance matrices
     close_dist_matrix = networkGraphsFull.df_distance_correlation(allStock_df_list[0])
-    open_dist_matrix = networkGraphsFull.df_distance_correlation(allStock_df_list[1])
-    open_close_dist_matrix = networkGraphsFull.df_distance_correlation(allStock_df_list[2])
-    high_dist_matrix = networkGraphsFull.df_distance_correlation(allStock_df_list[3])
-    low_dist_matrix = networkGraphsFull.df_distance_correlation(allStock_df_list[4])
+    # open_dist_matrix = networkGraphsFull.df_distance_correlation(allStock_df_list[1])
+    # open_close_dist_matrix = networkGraphsFull.df_distance_correlation(allStock_df_list[2])
+    # high_dist_matrix = networkGraphsFull.df_distance_correlation(allStock_df_list[3])
+    # low_dist_matrix = networkGraphsFull.df_distance_correlation(allStock_df_list[4])
 
     #correlationNetworks
     corrNet_close = networkGraphsFull.build_corr(close_dist_matrix)
-    corrNet_open = networkGraphsFull.build_corr(open_dist_matrix)
-    corrNet_close_diff = networkGraphsFull.build_corr(open_close_dist_matrix)
-    corrNet_high = networkGraphsFull.build_corr(high_dist_matrix)
-    corrNet_low = networkGraphsFull.build_corr(low_dist_matrix)
+    # corrNet_open = networkGraphsFull.build_corr(open_dist_matrix)
+    # corrNet_close_diff = networkGraphsFull.build_corr(open_close_dist_matrix)
+    # corrNet_high = networkGraphsFull.build_corr(high_dist_matrix)
+    # corrNet_low = networkGraphsFull.build_corr(low_dist_matrix)
 
     #plotting the various network graphs
-    networkGraphs_plot.plot_network(corrNet_close,'Hello')
-
-
-
-
-    # df_dcor_list = [networkGraphs_dataPrep.distance_correlation_matrix(df) for df in allStock_df_list]
-
-    # df_dcor_list = [networkGraphs_dataPrep.df_distance_correlation(df) for df in allStock_df_list]
-
-    # print(df_dcor_list[4].head())
-
-
-    # dist_corr_matrix = networkGraphs_dataPrep.distance_correlation_matrix(allStock_df_list[0])
-    # print(allStock_df_list[0])
-    # print(dist_corr_matrix)
-
-    # networkGraphs_plot.plot_network(df_dcor_list[4],'Hello')
+    networkGraphsFull.plot_network(corrNet_close,'Distance Correlation Network for Closing Prices')
+    # networkGraphsFull.plot_network(corrNet_open,'Distance Correlation Network for Opening Prices')
+    # networkGraphsFull.plot_network(corrNet_close_diff,'Distance Correlation Network for Difference in Prices (Open vs Close)')
+    # networkGraphsFull.plot_network(corrNet_high,'Distance Correlation Network for High Prices')
+    # networkGraphsFull.plot_network(corrNet_low,'Distance Correlation Network for Low Prices')
 
 
 

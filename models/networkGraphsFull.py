@@ -156,7 +156,7 @@ def build_corr(df_train):
 
 
 
-def plt_corr_nx(H, title):
+def plot_network(H, title):
     edges, weights = zip(*nx.get_edge_attributes(H, "weight").items())
 
     pos = nx.kamada_kawai_layout(H) #not sure exactly what this function is but I found it on the web and it works!!!!!!
@@ -210,3 +210,5 @@ def plt_corr_nx(H, title):
     # #silence warnings   
     # import warnings
     # warnings.filterwarnings("ignore")
+    outputStringName = 'output_' + str(title) + '.jpg'
+    plt.savefig(outputStringName)
