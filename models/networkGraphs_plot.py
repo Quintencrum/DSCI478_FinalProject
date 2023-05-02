@@ -13,6 +13,8 @@ def plot_network(distance_matrix, title):   #create network graphs
     fig, ax = plt.subplots(figsize=(12, 9))
     ax.set_title(title, fontsize=16)
 
+    print(distance_matrix)
+
     dissimilarity_matrix = 1 - distance_matrix / np.max(distance_matrix)
     
     positions = MDS(n_components=2, dissimilarity="precomputed", random_state=42).fit_transform(dissimilarity_matrix) 
@@ -46,7 +48,7 @@ def plot_network(distance_matrix, title):   #create network graphs
 
 
 
-# #sample distance matix to test plot
+#sample distance matix to test plot
 # distance_matrix = np.array([
 #     [0.0, 0.2, 0.4, 0.6],
 #     [0.2, 0.0, 0.3, 0.5],

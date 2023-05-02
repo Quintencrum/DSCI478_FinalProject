@@ -151,3 +151,62 @@ def build_corr(df_train):
             temp_mat_2.remove_edge(u, v)
     
     return temp_mat_2
+
+
+
+
+
+def plt_corr_nx(H, title):
+    edges, weights = zip(*nx.get_edge_attributes(H, "weight").items())
+
+    pos = nx.kamada_kawai_layout(H) #not sure exactly what this function is but I found it on the web and it works!!!!!!
+
+    fig, ax = plt.subplots(figsize=(12, 9))
+    ax.set_title(title, size=16)
+
+    deg = H.degree
+    nodelist = []
+    node_sizes = []
+
+    for n, d in deg:    #helps with names
+        nodelist.append(n)
+        node_sizes.append(d)
+
+    nx.draw_networkx_nodes(
+        H,
+        pos,
+        node_color="#DA70D6",
+        nodelist=nodelist,
+        node_size=np.power(node_sizes, 2.33),
+        alpha=0.8,
+        ax=ax,
+    )
+
+    nx.draw_networkx_labels(H, pos, font_size=13, font_family="sans-serif", ax=ax)
+
+    cmap = plt.cm.cubehelix_r
+
+    nx.draw_networkx_edges(
+        H,
+        pos,
+        edgelist=edges,
+        style="solid",
+        edge_color=weights,
+        edge_cmap=cmap,
+        edge_vmin=min(weights),
+        edge_vmax=max(weights),
+        ax=ax,
+    )
+#colorbar
+    sm = plt.cm.ScalarMappable(
+        cmap=cmap, 
+        norm=plt.Normalize(vmin=min(weights), 
+        vmax=max(weights))
+    )
+    sm._A = []
+    plt.colorbar(sm)
+    plt.axis("off")
+
+    # #silence warnings   
+    # import warnings
+    # warnings.filterwarnings("ignore")
