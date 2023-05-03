@@ -113,9 +113,9 @@ def df_distance_correlation(df_train):
     distcorr_matrix = np.zeros((n_stocks, n_stocks))
     # print(n_stocks) #31 :(
     for i in range(n_stocks):
-        print(i)
+        # print(i)
         for j in range(i, n_stocks):
-            print(j)
+            # print(j)
             stock_i = df_train.iloc[:, i].values
             stock_j = df_train.iloc[:, j].values
             # distcorr_ij = distCorr(stock_i, stock_j)
@@ -156,15 +156,17 @@ def build_corr(df_train):
 
 
 
-def plot_network(H, title):
-    edges, weights = zip(*nx.get_edge_attributes(H, "weight").items())
+def plot_network(temp, title):
+    # print(type(temp))
+    # print('-----------------------?????????????')
+    edges, weights = zip(*nx.get_edge_attributes(temp, "weight").items())
 
-    pos = nx.kamada_kawai_layout(H) #not sure exactly what this function is but I found it on the web and it works!!!!!!
+    pos = nx.kamada_kawai_layout(temp) #not sure exactly what this function is but I found it on the web and it works!!!!!!
 
     fig, ax = plt.subplots(figsize=(12, 9))
     ax.set_title(title, size=16)
 
-    deg = H.degree
+    deg = temp.degree
     nodelist = []
     node_sizes = []
 
@@ -173,7 +175,7 @@ def plot_network(H, title):
         node_sizes.append(d)
 
     nx.draw_networkx_nodes(
-        H,
+        temp,
         pos,
         node_color="#DA70D6",
         nodelist=nodelist,
@@ -182,12 +184,12 @@ def plot_network(H, title):
         ax=ax,
     )
 
-    nx.draw_networkx_labels(H, pos, font_size=13, font_family="sans-serif", ax=ax)
+    nx.draw_networkx_labels(temp, pos, font_size=13, font_family="sans-serif", ax=ax)
 
     cmap = plt.cm.cubehelix_r
 
     nx.draw_networkx_edges(
-        H,
+        temp,
         pos,
         edgelist=edges,
         style="solid",
@@ -241,7 +243,7 @@ def correlation_networks(allStock_df_list):
     corrNet_high = build_corr(high_dist_matrix)
     corrNet_low = build_corr(low_dist_matrix)
 
-    return [close_dist_matrix, open_dist_matrix, open_close_dist_matrix, high_dist_matrix, low_dist_matrix]
+    return [corrNet_close, corrNet_open, corrNet_close_diff, corrNet_high, corrNet_low]
 
 
 
@@ -313,6 +315,9 @@ def select_stock_set(allStock_df_list):
     #inner
     corrNet_close, corrNet_open, corrNet_close_diff, corrNet_high, corrNet_low = correlation_networks(allStock_df_list_inner)
 
+    # print(type(corrNet_close))
+    # print('llllllllllllllllllll')
+
     plot_network_graphs(corrNet_close, corrNet_open, corrNet_close_diff, corrNet_high, corrNet_low,'inner')
 
     #outer
@@ -330,5 +335,6 @@ def select_stock_set(allStock_df_list):
 
 
 def networkGraphsMainFunction(allStock_df_list):
-    # full_stock_sets(allStock_df_list)
+    full_stock_sets(allStock_df_list)
+    print('Full set done')
     select_stock_set(allStock_df_list)

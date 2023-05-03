@@ -47,7 +47,6 @@ def main():
     # networkGraphsFull.plot_network(corrNet_high,'Distance Correlation Network for High Prices')
     # networkGraphsFull.plot_network(corrNet_low,'Distance Correlation Network for Low Prices')
 
-
     networkGraphsFull.networkGraphsMainFunction(allStock_df_list)
 
 
