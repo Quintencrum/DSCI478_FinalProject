@@ -4,7 +4,7 @@ from data.dataClass import Data, DataType, IBBData
 import utilities as utils
 
 
-def data_import_ibb():
+def data_import_ibb() -> Data:
     data_path = utils.get_data_path().joinpath('Deep_Portfolio')
     
     ibb_full_df = pd.read_csv(data_path.joinpath('ibb.csv'), index_col=0).astype('float32')
@@ -18,7 +18,7 @@ def data_import_ibb():
     return ibb_full
 
 
-def data_import_etfs():
+def data_import_etfs() -> Data:
     data_path = utils.get_data_path().joinpath('OLPS_Portfolio')
 
     etfs_df = pd.read_csv(data_path.joinpath('ETFs.csv'), index_col=0).astype('float32')
@@ -26,15 +26,7 @@ def data_import_etfs():
     
     return etfs
 
-def data_import_spx():
-    data_path = utils.get_data_path().joinpath('PCA_Factors')
-
-    spx_df = pd.read_csv(data_path.joinpath('spx_holdings_and_spx_closeprice.csv'), index_col=0).astype('float32')
-    spx = Data(spx_df, DataType.SPX, "SPX Index")
-
-    return spx
-
-def data_import_ng():
+def data_import_ng() -> Data:
     data_path = utils.get_data_path().joinpath('Network_graphs')
 
     # ng_df = pd.read_csv(data_path.joinpath('all_stocks.csv'), index_col=0).astype('float32')
@@ -44,7 +36,23 @@ def data_import_ng():
 
     return ng
 
-def get_data(dType: DataType):
+def data_import_spx() -> Data:
+    data_path = utils.get_data_path().joinpath('PCA_Factors')
+
+    spx_df = pd.read_csv(data_path.joinpath('spx_holdings_and_spx_closeprice.csv'), index_col=0).astype('float32')
+    spx = Data(spx_df, DataType.SPX, "SPX Index")
+
+    return spx
+
+def data_import_dow() -> Data:
+    data_path = utils.get_data_path().joinpath('PCA_Dow')
+
+    dow_df = pd.read_csv(data_path.joinpath('spx_holdings_and_spx_closeprice.csv'))
+    dow = Data(dow_df, DataType.DOW, "Dow Jones Closing Prices")
+
+    return dow
+
+def get_data(dType: DataType) -> Data:
     if dType == DataType.IBB:
         return data_import_ibb()
     elif dType == DataType.ETFS:
@@ -53,3 +61,5 @@ def get_data(dType: DataType):
         return data_import_spx()
     elif dType == DataType.NG:
         return data_import_ng()
+    elif dType == DataType.DOW:
+        return data_import_dow()

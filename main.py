@@ -1,30 +1,34 @@
 import argparse
-
-from data import dataImport, visualize
-from models import networkGraphsFull, networkGraphs_dataPrep, networkGraphs_plot
 import numpy as np
 
-
-# def main(parsed):
-#     if parsed.visulize:
-#         print("T1")
-#     print("T2")
-
-
-# if __name__ == "__main__":
-#     parser = argparse.ArgumentParser(
-#         description="Main file for the project",
-#         epilog="Some of the options will generate local artifacts")
-
-#     parser.add_argument('-v', '--visulize', action='store_true')
-
-#     main(parser.parse_args())
-
-def main():
-    print('Hello World!')
+from data import dataImport, visualize
+from data.dataClass import DataType
+from models.modelsClass import ModelType
     
+
+def main(parsed: argparse.Namespace):
+    if parsed.visualize:
+        visu_data(parsed)
+    elif parsed.model:
+       run_model(parsed)
+
+def run_model(parsed: argparse.Namespace):
+    if parsed.model == ModelType.NG:
+        run_network_graphs()
+    elif parsed.model == ModelType.LN:
+        run_lin_reg()
+
+def run_lin_reg():
+    from models import LinReg_Evan
+
+    LinReg_Evan.main()
+
+def run_network_graphs():
+    from models import networkGraphsFull, networkGraphs_dataPrep, networkGraphs_plot
+
     # #all stocks data
-    allStock_df_list = networkGraphsFull.networkDataPrep(dataImport.data_import_ng())
+    allStock_data = dataImport.data_import_ng()
+    allStock_df_list = networkGraphsFull.networkDataPrep(allStock_data.df)
 
     # #distance matrices
     # close_dist_matrix = networkGraphsFull.df_distance_correlation(allStock_df_list[0])
@@ -49,18 +53,7 @@ def main():
 
     networkGraphsFull.networkGraphsMainFunction(allStock_df_list)
 
-
-
-if __name__ == "__main__":
-    main()
-from data.dataClass import DataType
-
-
-def main(parsed):
-    if parsed.visualize:
-        visu_data(parsed)
-
-def visu_data(parsed):
+def visu_data(parsed: argparse.Namespace):
     data = dataImport.get_data(parsed.visualize)
     visualize.plot(data)
 
@@ -72,6 +65,6 @@ if __name__ == "__main__":
 
     parser.add_argument('-v', '--visualize', choices=list(DataType), type=DataType)
 
-    parser.add_argument('-t')
+    parser.add_argument('-m', '--model', choices=list(ModelType), type=ModelType)
 
     main(parser.parse_args())
