@@ -34,6 +34,16 @@ def data_import_spx():
 
     return spx
 
+def data_import_ng():
+    data_path = utils.get_data_path().joinpath('Network_graphs')
+
+    # ng_df = pd.read_csv(data_path.joinpath('all_stocks.csv'), index_col=0).astype('float32')
+    ng_df = pd.read_csv(data_path.joinpath('all_stocks.csv'))
+    #index is set in networkGraphs_dataPrep.py to make them dateTimes not just dates
+    ng = Data(ng_df, DataType.NG, "All Stocks Simple Data")
+
+    return ng
+
 def get_data(dType: DataType):
     if dType == DataType.IBB:
         return data_import_ibb()
@@ -41,3 +51,5 @@ def get_data(dType: DataType):
         return data_import_etfs()
     elif dType == DataType.SPX:
         return data_import_spx()
+    elif dType == DataType.NG:
+        return data_import_ng()

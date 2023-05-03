@@ -11,11 +11,13 @@ class DataType(Enum):
     - IBB (str): IBB Index
     - ETFS (str): ETFs
     - SPX (str): SPX Index
+    - NG (str): Network Graph Data
     """
 
     IBB = "IBB_Index"
     ETFS = "ETFs"
     SPX = "SPX_Index"
+    NG = "Network_Graph_Data"
 
     def __str__(self) -> str:
         return self.value
