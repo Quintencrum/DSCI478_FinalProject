@@ -5,6 +5,7 @@ from sklearn.manifold import MDS
 import tensorflow as tf
 import networkx as nx
 
+import utilities as utils
 
 # all_stocks = data_import_ng()
 # all_stocks.Name.unique()
@@ -213,7 +214,8 @@ def plot_network(temp, title):
     # import warnings
     # warnings.filterwarnings("ignore")
     outputStringName = 'output_' + str(title) + '.jpg'
-    plt.savefig(outputStringName)
+    file_path = utils.get_project_path().joinpath('models', 'results', 'Network_Graphs', outputStringName)
+    plt.savefig(file_path)
 
 
 

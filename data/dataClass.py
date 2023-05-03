@@ -8,16 +8,18 @@ class DataType(Enum):
     The data types for the different kinds of base stock data
 
     ## Values:
-    - IBB (str): IBB Index
+    - DOW (str): Dow Jones adjusted closing prices
     - ETFS (str): ETFs
-    - SPX (str): SPX Index
+    - IBB (str): IBB Index
     - NG (str): Network Graph Data
+    - SPX (str): SPX Index
     """
 
-    IBB = "IBB_Index"
+    DOW = "Dow_Adj"
     ETFS = "ETFs"
-    SPX = "SPX_Index"
+    IBB = "IBB_Index"
     NG = "Network_Graph_Data"
+    SPX = "SPX_Index"
 
     def __str__(self) -> str:
         return self.value
