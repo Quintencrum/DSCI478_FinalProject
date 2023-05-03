@@ -216,7 +216,29 @@ def plot_network(temp, title):
     plt.savefig(outputStringName)
 
 
+def risk_graph(corrNet, inputName):
+    comm_bet_cent = nx.communicability_betweenness_centrality(corrNet)
 
+    risk_alloc1 = pd.Series(comm_bet_cent)
+    risk_alloc2 = risk_alloc1 / risk_alloc1.sum()
+    risk_alloc3 = risk_alloc2.sort_values()
+
+    #plotting time
+    plt.figure(figsize=(8, 10))
+    plt.barh(y=risk_alloc3.index, width=risk_alloc3.values, color='r')
+    plt.gca().spines['right'].set_visible(False)
+    plt.gca().spines['top'].set_visible(False)
+    plt.gca().spines['bottom'].set_visible(False)
+    plt.title("Intraportfolio Risk " + str(inputName), size=18)
+
+    for i, (stock, risk) in enumerate(zip(risk_alloc3.index, risk_alloc3.values)):
+        plt.annotate(f"{(risk * 100):.2f}%", xy=(risk + 0.001, i + 0.15), fontsize=10)
+
+    plt.xticks([])
+    plt.xlabel("Relative Risk %", size=12)
+    # plt.show()
+    outputStringName = 'relativeRisk_' + str(inputName)
+    plt.savefig(outputStringName)
 
 
 def plot_network_graphs(corrNet_close, corrNet_open, corrNet_close_diff, corrNet_high, corrNet_low,type):
@@ -255,11 +277,7 @@ def full_stock_sets(allStock_df_list):
 
     plot_network_graphs(corrNet_close, corrNet_open, corrNet_close_diff, corrNet_high, corrNet_low,'full')
 
-
-
-def select_stock_set(allStock_df_list):
-    #stocks to keep for different categories
-
+def subsetStocks(allStock_df_list):
     #closing
     closing_subset_outer = ['Apple','Amazon','Altaba','United Health','Walmart']
     closing_subset_inner = ['United Technologies','3M','JPMorgan Chase','IBM','American Express']
@@ -311,6 +329,66 @@ def select_stock_set(allStock_df_list):
     allStock_df_list_outer = [df_close_outer, df_open_outer,df_diff_outer, df_high_outer, df_low_outer]
     allStock_df_list = [df_close, df_open,df_diff, df_high, df_low]
 
+    return [allStock_df_list_inner, allStock_df_list_outer, allStock_df_list]
+
+
+
+def select_stock_set(allStock_df_list):
+    #stocks to keep for different categories
+
+    # #closing
+    # closing_subset_outer = ['Apple','Amazon','Altaba','United Health','Walmart']
+    # closing_subset_inner = ['United Technologies','3M','JPMorgan Chase','IBM','American Express']
+    # closing_subset = closing_subset_inner + closing_subset_outer
+
+    # df_close_outer = allStock_df_list[0][closing_subset_outer]
+    # df_close_inner = allStock_df_list[0][closing_subset_inner]
+    # df_close = allStock_df_list[0][closing_subset]
+
+    # #open
+    # opening_subset_outer = ['Apple','Amazon','Altaba','United Health','Home Depot']
+    # opening_subset_inner = ['United Technologies','3M','JPMorgan Chase','Cisco Systems','American Express']
+    # opening_subset = opening_subset_inner + opening_subset_outer
+
+    # df_open_outer = allStock_df_list[0][opening_subset_outer]
+    # df_open_inner = allStock_df_list[0][opening_subset_inner]
+    # df_open = allStock_df_list[0][opening_subset]
+
+    # #open-close
+    # diff_subset_outer = ['Apple','Amazon','Altaba','United Health','Nike']
+    # diff_subset_inner = ['United Technologies','3M','General Electric','IBM','American Express']
+    # diff_subset = diff_subset_inner + diff_subset_outer
+
+    # df_diff_outer = allStock_df_list[0][diff_subset_outer]
+    # df_diff_inner = allStock_df_list[0][diff_subset_inner]
+    # df_diff = allStock_df_list[0][diff_subset]
+
+    # #high
+    # high_subset_outer = ['Procter & Gamble','Walmart','Merk','United Health','Verizon']
+    # high_subset_inner = ['JPMorgan Chase','3M','General Electric','IBM','American Express']
+    # high_subset = high_subset_inner + high_subset_outer
+
+    # df_high_outer = allStock_df_list[0][high_subset_outer]
+    # df_high_inner = allStock_df_list[0][high_subset_inner]
+    # df_high = allStock_df_list[0][high_subset]
+
+    # #low
+    # low_subset_outer = ['Apple','Amazon','Altaba','Verizon','Procter & Gamble']
+    # low_subset_inner = ['United Technologies','3M','General Electric','Walt Disney','American Express']
+    # low_subset = low_subset_inner + low_subset_outer
+
+    # df_low_outer = allStock_df_list[0][low_subset_outer]
+    # df_low_inner = allStock_df_list[0][low_subset_inner]
+    # df_low = allStock_df_list[0][low_subset]
+
+
+    # #combining stocks
+    # allStock_df_list_inner = [df_close_inner, df_open_inner,df_diff_inner, df_high_inner, df_low_inner]
+    # allStock_df_list_outer = [df_close_outer, df_open_outer,df_diff_outer, df_high_outer, df_low_outer]
+    # allStock_df_list = [df_close, df_open,df_diff, df_high, df_low]
+
+    allStock_df_list_inner, allStock_df_list_outer, allStock_df_list = subsetStocks(allStock_df_list)
+
 
     #inner
     corrNet_close, corrNet_open, corrNet_close_diff, corrNet_high, corrNet_low = correlation_networks(allStock_df_list_inner)
@@ -329,6 +407,16 @@ def select_stock_set(allStock_df_list):
     corrNet_close, corrNet_open, corrNet_close_diff, corrNet_high, corrNet_low = correlation_networks(allStock_df_list)
 
     plot_network_graphs(corrNet_close, corrNet_open, corrNet_close_diff, corrNet_high, corrNet_low,'combined')
+
+
+def run_risk_graphs(allStock_df_list):
+    allStock_df_list_inner, allStock_df_list_outer, allStock_df_list = subsetStocks(allStock_df_list)
+
+    corrNet_close, corrNet_open, corrNet_close_diff, corrNet_high, corrNet_low = correlation_networks(allStock_df_list)
+
+    risk_graph(corrNet_high,'high_combined')
+
+    
 
 
 

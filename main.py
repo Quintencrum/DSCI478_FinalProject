@@ -1,7 +1,7 @@
 import argparse
 
 from data import dataImport, visualize
-from models import networkGraphsFull, networkGraphs_dataPrep, networkGraphs_plot
+from models import networkGraphsFull, networkGraphs_temp
 import numpy as np
 
 
@@ -47,7 +47,21 @@ def main():
     # networkGraphsFull.plot_network(corrNet_high,'Distance Correlation Network for High Prices')
     # networkGraphsFull.plot_network(corrNet_low,'Distance Correlation Network for Low Prices')
 
-    networkGraphsFull.networkGraphsMainFunction(allStock_df_list)
+    # networkGraphsFull.networkGraphsMainFunction(allStock_df_list)
+
+    # allStock_df_list_inner, allStock_df_list_outer, allStock_df_list = networkGraphsFull.subsetStocks(allStock_df_list)
+
+    corrNet_close, corrNet_open, corrNet_close_diff, corrNet_high, corrNet_low = networkGraphsFull.correlation_networks(allStock_df_list)
+
+    # networkGraphsFull.risk_graph(corrNet_close,'close_combined')
+    # networkGraphsFull.risk_graph(corrNet_open,'open_combined')
+    # networkGraphsFull.risk_graph(corrNet_close_diff,'difference_combined')
+    # networkGraphsFull.risk_graph(corrNet_high,'high_combined')
+    # networkGraphsFull.risk_graph(corrNet_low,'low_combined')
+    networkGraphsFull.run_risk_graphs(allStock_df_list)
+    
+
+
 
 
 
