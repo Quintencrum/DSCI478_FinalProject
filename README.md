@@ -1,7 +1,7 @@
 # DSCI478_FinalProject
 
 
-Main link: https://github.com/firmai/machine-learning-asset-management
+Source Paper and Github Repository: https://github.com/firmai/machine-learning-asset-management
 
-Data link: https://drive.google.com/drive/folders/1aD3ICiqWSvXZJsE6nJLY7-zLPbW_BPMb
+Google Drive Link for Data: https://drive.google.com/drive/folders/1aD3ICiqWSvXZJsE6nJLY7-zLPbW_BPMb
 
